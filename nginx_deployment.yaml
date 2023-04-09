@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: nginx-blob
 spec:
-  nodeSelector:
-    "kubernetes.io/os": linux
   containers:
     - image: mcr.microsoft.com/oss/nginx/nginx:1.17.3-alpine
       name: nginx-blob
