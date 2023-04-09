@@ -24,6 +24,8 @@ spec:
         volumeMounts:
           - name: blob01
             mountPath: "/mnt/blob" ##mount path on the container
+      nodeSelector:
+        "kubernetes.io/os": linux
       volumes:
         - name: blob01
           persistentVolumeClaim:
