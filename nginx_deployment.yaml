@@ -2,18 +2,29 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-blob
+  labels:
+    app: nginx-blob
 spec:
-  containers:
-    - image: mcr.microsoft.com/oss/nginx/nginx:1.17.3-alpine
-      name: nginx-blob
-      command:
-        - "/bin/sh"
-        - "-c"
-        - while true; do echo $(date) >> /mnt/blob/outfile; sleep 1; done
-      volumeMounts:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-blob
+  template:
+    metadata:
+      labels:
+        app: nginx-blob
+    spec:
+      containers:
+      - image: mcr.microsoft.com/oss/nginx/nginx:1.17.3-alpine
+        name: nginx-blob
+        command:
+          - "/bin/sh"
+          - "-c"
+          - while true; do echo $(date) >> /mnt/blob/outfile; sleep 1; done
+        volumeMounts:
+          - name: blob01
+            mountPath: "/mnt/blob" ##mount path on the container
+      volumes:
         - name: blob01
-          mountPath: "/mnt/blob"
-  volumes:
-    - name: blob01
-      persistentVolumeClaim:
-        claimName: pvc-blob                       ## This is where we mount the PVC created above.
+          persistentVolumeClaim:
+            claimName: pvc-blob  ## This is where we mount the PVC created above.
