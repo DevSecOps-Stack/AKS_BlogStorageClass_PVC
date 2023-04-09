@@ -1,5 +1,7 @@
 # aks-storage-class-pvc
 
+az aks create --enable-blob-driver -n myAKSCluster -g myResourceGroup
+
 az group create --name AKSRG --location eastus
 
 az acr create --resource-group AKSRG --name aksreg --sku Basic
