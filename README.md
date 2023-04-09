@@ -1,0 +1,1 @@
+# aks-storage-class-pvc
